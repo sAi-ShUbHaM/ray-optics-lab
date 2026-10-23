@@ -11,7 +11,8 @@ import {
   type MirageResult,
 } from "./drawing";
 
-const API = "http://127.0.0.1:8000/simulate/mirage";
+import { API_BASE } from "@/lib/config";
+const API = `${API_BASE}/simulate/mirage`;
 
 type Scenario = {
   label: string;
