@@ -1,0 +1,23 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Next.js
+node_modules/
+.next/
+out/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local tools
+.kombai/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db

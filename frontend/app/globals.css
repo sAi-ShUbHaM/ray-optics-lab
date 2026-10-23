@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Ray Optics Lab design tokens
+   Semantic tokens only. Components and canvases read these variables;
+   nothing outside this file should hardcode a theme colour.
+   Theme is selected by [data-theme] on <html> (set before first paint
+   by the inline script in layout.tsx).
+   ------------------------------------------------------------------ */
+
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #000000;
+  --bg-secondary: #080808;
+  --surface: #0f0f0f;
+  --surface-elevated: #171717;
+
+  /* text */
+  --text: #f5f5f5;
+  --text-secondary: #a8a8a8;
+  --text-muted: #858585;
+
+  /* lines */
+  --border: #262626;
+  --border-strong: #6e6e6e;
+
+  /* accent + status */
+  --accent: #e0282e;
+  --accent-contrast: #ffffff;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #ff6b61;
+  --focus-ring: #f5f5f5;
+
+  /* diagram */
+  --diagram-bg: #050505;
+  --diagram-axis: #4a4a4a;
+  --diagram-grid: #1a1a1a;
+  --diagram-label: #a8a8a8;
+  --diagram-element: #d4d4d4;
+  --diagram-element-fill: rgba(245, 245, 245, 0.06);
+  --ray-incident: #f5f5f5;
+  --ray-reflected: #ff3b30;
+  --ray-refracted: #5ab0ff;
+  --ray-virtual: #8a8a8a;
+  --ray-normal: #6a6a6a;
+
+  --data-violet: #a78bfa;
+  --data-orange: #ffa733;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f3f3f1;
+  --bg-secondary: #ebebe8;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+
+  --text: #0a0a0a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #666666;
+
+  --border: #d6d6d2;
+  --border-strong: #85857f;
+
+  --accent: #d71921;
+  --accent-contrast: #ffffff;
+  --success: #15803d;
+  --warning: #a16207;
+  --error: #b91c1c;
+  --focus-ring: #0a0a0a;
+
+  --diagram-bg: #ffffff;
+  --diagram-axis: #b4b4af;
+  --diagram-grid: #eeeeea;
+  --diagram-label: #4a4a4a;
+  --diagram-element: #2a2a2a;
+  --diagram-element-fill: rgba(10, 10, 10, 0.05);
+  --ray-incident: #0a0a0a;
+  --ray-reflected: #d71921;
+  --ray-refracted: #1560bd;
+  --ray-virtual: #7a7a76;
+  --ray-normal: #9a9a95;
+
+  --data-violet: #6d28d9;
+  --data-orange: #b45309;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-fg: var(--text);
+  --color-fg-secondary: var(--text-secondary);
+  --color-fg-muted: var(--text-muted);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --font-sans: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Type scale (rem). Headings use Space Grotesk, data uses Space Mono. */
+:root {
+  --text-label: 0.6875rem; /* 11px mono label */
+  --text-small: 0.8125rem; /* 13px helper */
+  --text-body: 0.9375rem;  /* 15px */
+  --text-lead: 1.125rem;
+  --text-h3: 1.125rem;
+  --text-h2: 1.5rem;
+  --text-h1: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+  --text-display: clamp(2.5rem, 1.4rem + 5vw, 5rem);
+
+  --space-unit: 4px;
+  --radius: 4px;
+  --radius-lg: 8px;
+  --header-h: 56px;
+  --sidebar-w: 232px;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+@layer base {
+  /* Form controls inherit the theme everywhere, including pages that do not
+     style them inline. Utility classes (Tailwind) still win over these. */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="search"]),
+  select,
+  textarea {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+  select {
+    font-family: var(--font-sans);
+  }
+  input[type="range"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--text);
+  }
+  input::placeholder {
+    color: var(--text-muted);
+  }
+  :disabled {
+    opacity: 0.5;
+  }
+}
+
+h1, h2, h3 {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Dot-matrix motif: a quiet supporting texture, never a hero element. */
+.dot-matrix {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--border-strong) 45%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 14px 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
