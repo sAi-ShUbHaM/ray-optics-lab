@@ -14,6 +14,7 @@ from simulations.prism import simulate_prism
 from simulations.slab import simulate_slab, simulate_apparent_depth
 from simulations.rainbow import simulate_rainbow
 from simulations.mirage import simulate_mirage
+from simulations.atmospheric_refraction import simulate_atmospheric_refraction
 from simulations.optical_instruments import (
     simulate_telescope,
     simulate_microscope,
@@ -502,6 +503,39 @@ def mirage(request: MirageRequest):
             earth_curvature=request.earth_curvature,
             ray_count=request.ray_count,
             fan_scale=request.fan_scale
+        )
+    except ValueError as error:
+        # Bad input -> clear 422 message instead of a 500 crash.
+        raise HTTPException(status_code=422, detail=str(error))
+
+
+# -----------------------------
+# Atmospheric refraction (the Sun and stars seen through the whole atmosphere)
+# -----------------------------
+
+class AtmosphericRefractionRequest(BaseModel):
+    apparent_altitude: float = 10.0
+    temperature: float = 10.0
+    pressure: float = 1010.0
+    lapse_rate: float = 6.5
+    tropopause_height: float = 11.0
+    observer_height: float = 0.0
+    sun_true_altitude: float = 0.0
+    latitude: float = 45.0
+
+
+@app.post("/simulate/atmospheric-refraction")
+def atmospheric_refraction(request: AtmosphericRefractionRequest):
+    try:
+        return simulate_atmospheric_refraction(
+            apparent_altitude=request.apparent_altitude,
+            temperature=request.temperature,
+            pressure=request.pressure,
+            lapse_rate=request.lapse_rate,
+            tropopause_height=request.tropopause_height,
+            observer_height=request.observer_height,
+            sun_true_altitude=request.sun_true_altitude,
+            latitude=request.latitude
         )
     except ValueError as error:
         # Bad input -> clear 422 message instead of a 500 crash.

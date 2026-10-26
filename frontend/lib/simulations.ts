@@ -160,6 +160,27 @@ export const SIMULATIONS: Simulation[] = [
       "Light bending through layers of air: inferior mirages over a hot road and superior mirages such as the Fata Morgana.",
     keywords: ["inferior mirage", "superior mirage", "fata morgana", "hot road", "temperature gradient"],
   },
+  {
+    id: "atmospheric-refraction",
+    title: "Atmospheric Refraction",
+    href: "/atmospheric-refraction",
+    category: "phenomena",
+    description:
+      "How the whole atmosphere lifts the Sun and stars, why a setting Sun looks flattened, and why sunset arrives late.",
+    keywords: [
+      "sunset",
+      "sunrise",
+      "horizon",
+      "flattened sun",
+      "astronomical refraction",
+      "bennett",
+      "temperature",
+      "pressure",
+      "lapse rate",
+      "tropopause",
+      "dispersion",
+    ],
+  },
 ];
 
 export function getCategory(id: CategoryId): Category {

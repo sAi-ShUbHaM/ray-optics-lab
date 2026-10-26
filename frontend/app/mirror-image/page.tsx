@@ -9,7 +9,7 @@ import {
 } from "react";
 import { API_BASE } from "@/lib/config";
 import { useTheme } from "../components/ThemeProvider";
-import { setCanvasTheme, tcol, themedColor } from "@/lib/canvasTheme";
+import { setCanvasTheme, tcol, themedColor, canvasFont } from "@/lib/canvasTheme";
 
 // ============================================================
 // TYPES
@@ -403,7 +403,7 @@ function drawDiagram(
 
     const label = map([0.6, extentY - 1.4]);
     ctx.fillStyle = tcol("#888");
-    ctx.font = "12px Arial";
+    ctx.font = canvasFont(12, "sans", 400);
     ctx.fillText("paraxial plane x = 0", label[0], label[1]);
   }
 
@@ -447,7 +447,7 @@ function drawDiagram(
 
   // Notes at the bottom of the canvas
   ctx.fillStyle = tcol("#b45309");
-  ctx.font = "13px Arial";
+  ctx.font = canvasFont(13, "sans", 400);
 
   if (result.image_at_infinity) {
     ctx.fillText(
@@ -647,7 +647,7 @@ function drawMirror(
   }
 
   ctx.fillStyle = tcol("#111");
-  ctx.font = "bold 15px Arial";
+  ctx.font = canvasFont(15, "sans", 700);
 
   const label = map([
     result.mirror_type === "concave" ? -1.5 : 1.5,
@@ -674,7 +674,7 @@ function drawReference(
   ctx.fillStyle = tcol("#111");
   ctx.fill();
 
-  ctx.font = "bold 14px Arial";
+  ctx.font = canvasFont(14, "sans", 700);
   ctx.fillText(name, p[0] - 5, p[1] + 20);
 }
 
@@ -717,7 +717,7 @@ function drawArrow(
   ctx.fill();
 
   ctx.setLineDash([]);
-  ctx.font = "bold 14px Arial";
+  ctx.font = canvasFont(14, "sans", 700);
   ctx.fillText(label, b[0] + 7, b[1] - 8);
   ctx.restore();
 }
@@ -791,11 +791,11 @@ function drawLegend(
   ctx.stroke();
 
   ctx.fillStyle = tcol("#111");
-  ctx.font = "bold 13px Arial";
+  ctx.font = canvasFont(13, "sans", 700);
   ctx.fillText(title, 28, 38);
 
   ctx.fillStyle = tcol("#666");
-  ctx.font = "12px Arial";
+  ctx.font = canvasFont(12, "sans", 400);
   ctx.fillText(subtitle, 28, 56);
 
   let y = 80;
@@ -810,7 +810,7 @@ function drawLegend(
     ctx.stroke();
 
     ctx.fillStyle = tcol("#222");
-    ctx.font = "12px Arial";
+    ctx.font = canvasFont(12, "sans", 400);
     ctx.fillText(entry.label, 64, y + 4);
     y += rowHeight;
   }
@@ -1064,7 +1064,7 @@ export default function MirrorImagePage() {
               display: "block",
               width: "100%",
               height: "auto",
-              border: "1px solid #e5e5e5",
+              border: "1px solid var(--border)",
               borderRadius: 8,
             }}
           />
@@ -1233,7 +1233,7 @@ const styles: Record<string, CSSProperties> = {
   },
   panel: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 22,
   },
@@ -1254,7 +1254,7 @@ const styles: Record<string, CSSProperties> = {
   },
   select: {
     padding: 10,
-    border: "1px solid #bbb",
+    border: "1px solid var(--border-strong)",
     borderRadius: 8,
     background: "var(--surface)",
     color: "var(--text)",
@@ -1262,7 +1262,7 @@ const styles: Record<string, CSSProperties> = {
   modeButton: {
     flex: 1,
     padding: "10px 8px",
-    border: "1px solid #bbb",
+    border: "1px solid var(--border-strong)",
     borderRadius: 8,
     background: "var(--surface)",
     color: "var(--text)",
@@ -1287,7 +1287,7 @@ const styles: Record<string, CSSProperties> = {
   },
   card: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 18,
   },
@@ -1299,12 +1299,12 @@ const styles: Record<string, CSSProperties> = {
   th: {
     textAlign: "left",
     padding: "8px 10px",
-    borderBottom: "2px solid #ddd",
+    borderBottom: "2px solid var(--border)",
     color: "var(--text-secondary)",
   },
   td: {
     padding: "8px 10px",
-    borderBottom: "1px solid #eee",
+    borderBottom: "1px solid var(--border)",
     verticalAlign: "top",
   },
 };

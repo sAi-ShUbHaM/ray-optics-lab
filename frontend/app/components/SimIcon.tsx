@@ -113,6 +113,15 @@ export function SimIcon({ id, size = 22 }: { id: string; size?: number }) {
           <path d="M9 14v3.5l3-2 3 2V14" strokeDasharray="1.5 2" opacity="0.7" />
         </svg>
       );
+    case "atmospheric-refraction":
+      return (
+        <svg {...common}>
+          <path d="M2.5 19h19" />
+          <path d="M5 16.2c4.5 0 8-1 11.5-6.2" />
+          <path d="M3 13.2h6M3 10h10M3 6.8h14" opacity="0.35" strokeDasharray="1.5 2.5" />
+          <circle cx="19" cy="6" r="1.6" />
+        </svg>
+      );
     default:
       return (
         <svg {...common}>

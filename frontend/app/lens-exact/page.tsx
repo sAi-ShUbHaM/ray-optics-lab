@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { API_BASE } from "@/lib/config";
 import { useTheme } from "../components/ThemeProvider";
-import { setCanvasTheme, tcol } from "@/lib/canvasTheme";
+import { setCanvasTheme, tcol, canvasFont } from "@/lib/canvasTheme";
 
 // ============================================================
 // TYPES
@@ -195,7 +195,7 @@ function drawDiagram(
     ctx.fill();
 
     if (result.source === "point") {
-      ctx.font = "bold 13px Arial";
+      ctx.font = canvasFont(13, "sans", 700);
       drawHaloText(ctx, "paraxial image", c[0] + 8, c[1] - 10, tcol("#16a34a"));
     }
   }
@@ -216,7 +216,7 @@ function drawDiagram(
   }
 
   ctx.fillStyle = tcol("#b45309");
-  ctx.font = "13px Arial";
+  ctx.font = canvasFont(13, "sans", 400);
   notes.forEach((text, i) => {
     ctx.fillText(text, 20, height - 14 - (notes.length - 1 - i) * 18);
   });
@@ -249,7 +249,7 @@ function drawLensBody(
   ctx.stroke();
 
   ctx.fillStyle = tcol("#0e7490");
-  ctx.font = "bold 14px Arial";
+  ctx.font = canvasFont(14, "sans", 700);
   const label = map([0, result.aperture]);
   ctx.fillText(result.shape, label[0] - 30, label[1] - 12);
   ctx.restore();
@@ -262,7 +262,7 @@ function drawSource(
 ) {
   ctx.save();
   ctx.fillStyle = tcol("#111");
-  ctx.font = "bold 14px Arial";
+  ctx.font = canvasFont(14, "sans", 700);
 
   if (result.source === "point") {
     const c = map([result.x_start, result.source_height]);
@@ -376,7 +376,7 @@ function drawTopLabel(
 ) {
   const c = map([x, y]);
   ctx.save();
-  ctx.font = "12px Arial";
+  ctx.font = canvasFont(12, "sans", 400);
   ctx.textAlign = align;
   drawHaloText(ctx, text, c[0] + (align === "left" ? 4 : -4), c[1] - 4, color);
   ctx.restore();
@@ -444,7 +444,7 @@ function drawReference(
   ctx.fillStyle = tcol("#111");
   ctx.fill();
 
-  ctx.font = "bold 13px Arial";
+  ctx.font = canvasFont(13, "sans", 700);
   ctx.fillText(name, p[0] - 8, p[1] + 20);
 }
 
@@ -491,11 +491,11 @@ function drawLegend(ctx: CanvasRenderingContext2D) {
   ctx.stroke();
 
   ctx.fillStyle = tcol("#111");
-  ctx.font = "bold 13px Arial";
+  ctx.font = canvasFont(13, "sans", 700);
   ctx.fillText("Exact refraction at two spherical surfaces", 28, 38);
 
   ctx.fillStyle = tcol("#666");
-  ctx.font = "12px Arial";
+  ctx.font = canvasFont(12, "sans", 400);
   ctx.fillText("Snell's law applied at every hit point", 28, 56);
 
   // Colour scale: near-axis (blue) to marginal (orange)
@@ -830,7 +830,7 @@ export default function LensExactPage() {
               display: "block",
               width: "100%",
               height: "auto",
-              border: "1px solid #e5e5e5",
+              border: "1px solid var(--border)",
               borderRadius: 8,
             }}
           />
@@ -963,7 +963,7 @@ const styles: Record<string, CSSProperties> = {
   },
   panel: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 22,
   },
@@ -985,7 +985,7 @@ const styles: Record<string, CSSProperties> = {
   },
   select: {
     padding: 10,
-    border: "1px solid #bbb",
+    border: "1px solid var(--border-strong)",
     borderRadius: 8,
     background: "var(--surface)",
     color: "var(--text)",
@@ -998,7 +998,7 @@ const styles: Record<string, CSSProperties> = {
   },
   card: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 18,
   },
@@ -1010,12 +1010,12 @@ const styles: Record<string, CSSProperties> = {
   th: {
     textAlign: "left",
     padding: "8px 10px",
-    borderBottom: "2px solid #ddd",
+    borderBottom: "2px solid var(--border)",
     color: "var(--text-secondary)",
   },
   td: {
     padding: "8px 10px",
-    borderBottom: "1px solid #eee",
+    borderBottom: "1px solid var(--border)",
     verticalAlign: "top",
   },
 };

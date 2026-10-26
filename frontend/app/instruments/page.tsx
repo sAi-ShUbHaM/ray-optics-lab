@@ -377,7 +377,7 @@ export default function InstrumentsPage() {
               display: "block",
               width: "100%",
               height: "auto",
-              border: "1px solid #e5e5e5",
+              border: "1px solid var(--border)",
               borderRadius: 8,
             }}
           />
@@ -517,7 +517,7 @@ const styles: Record<string, CSSProperties> = {
   },
   panel: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 22,
   },
@@ -539,14 +539,14 @@ const styles: Record<string, CSSProperties> = {
   },
   select: {
     padding: 10,
-    border: "1px solid #bbb",
+    border: "1px solid var(--border-strong)",
     borderRadius: 8,
     background: "var(--surface)",
     color: "var(--text)",
   },
   tab: {
     padding: "10px 18px",
-    border: "1px solid #bbb",
+    border: "1px solid var(--border-strong)",
     borderRadius: 8,
     background: "var(--surface)",
     color: "var(--text)",
@@ -569,7 +569,7 @@ const styles: Record<string, CSSProperties> = {
   },
   card: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 18,
   },

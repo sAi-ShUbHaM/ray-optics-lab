@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { API_BASE } from "@/lib/config";
 import { useTheme } from "../components/ThemeProvider";
-import { setCanvasTheme, tcol } from "@/lib/canvasTheme";
+import { setCanvasTheme, tcol, canvasFont } from "@/lib/canvasTheme";
 
 // ============================================================
 // TYPES
@@ -214,7 +214,7 @@ function drawDiagram(
     const labelPoint = map([lens.x, half]);
     ctx.save();
     ctx.fillStyle = tcol("#0e7490");
-    ctx.font = "bold 13px Arial";
+    ctx.font = canvasFont(13, "sans", 700);
     ctx.textAlign = "center";
     drawHaloText(
       ctx,
@@ -278,7 +278,7 @@ function drawDiagram(
   }
 
   ctx.fillStyle = tcol("#b45309");
-  ctx.font = "13px Arial";
+  ctx.font = canvasFont(13, "sans", 400);
   ctx.textAlign = "left";
   notes.forEach((text, i) => {
     ctx.fillText(text, 20, height - 14 - (notes.length - 1 - i) * 18);
@@ -342,7 +342,7 @@ function drawFocalPoint(
   ctx.fill();
 
   ctx.save();
-  ctx.font = "11px Arial";
+  ctx.font = canvasFont(11, "sans", 400);
   ctx.textAlign = "center";
   drawHaloText(ctx, label, p[0], p[1] + 16, tcol("#555"));
   ctx.restore();
@@ -449,7 +449,7 @@ function drawArrow(
   ctx.fill();
 
   ctx.setLineDash([]);
-  ctx.font = "bold 13px Arial";
+  ctx.font = canvasFont(13, "sans", 700);
   drawHaloText(ctx, label, b[0] + 7, b[1] - (b[1] > a[1] ? -16 : 8), color);
   ctx.restore();
 }
@@ -509,11 +509,11 @@ function drawLegend(ctx: CanvasRenderingContext2D, result: SystemResult) {
   ctx.stroke();
 
   ctx.textAlign = "left";
-  ctx.font = "bold 13px Arial";
+  ctx.font = canvasFont(13, "sans", 700);
   ctx.fillStyle = tcol("#111");
   ctx.fillText("Thin-lens combination (paraxial rays)", 26, 24);
 
-  ctx.font = "12px Arial";
+  ctx.font = canvasFont(12, "sans", 400);
   ctx.fillStyle = tcol("#666");
   ctx.fillText("Each image becomes the next object", 26, 42);
 
@@ -531,7 +531,7 @@ function drawLegend(ctx: CanvasRenderingContext2D, result: SystemResult) {
     ctx.setLineDash([]);
 
     ctx.fillStyle = tcol("#222");
-    ctx.font = "12px Arial";
+    ctx.font = canvasFont(12, "sans", 400);
     ctx.fillText(item.label, x + 33, y + 4);
     x += 33 + ctx.measureText(item.label).width + 22;
   }
@@ -813,7 +813,7 @@ export default function LensCombinationPage() {
               display: "block",
               width: "100%",
               height: "auto",
-              border: "1px solid #e5e5e5",
+              border: "1px solid var(--border)",
               borderRadius: 8,
             }}
           />
@@ -920,7 +920,7 @@ const styles: Record<string, CSSProperties> = {
   },
   panel: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 22,
   },
@@ -935,7 +935,7 @@ const styles: Record<string, CSSProperties> = {
     marginBottom: 18,
   },
   lensBox: {
-    border: "1px solid #e5e5e5",
+    border: "1px solid var(--border)",
     borderRadius: 10,
     padding: 16,
     background: "var(--surface)",
@@ -948,7 +948,7 @@ const styles: Record<string, CSSProperties> = {
   },
   select: {
     padding: 10,
-    border: "1px solid #bbb",
+    border: "1px solid var(--border-strong)",
     borderRadius: 8,
     background: "var(--surface)",
     color: "var(--text)",
@@ -961,7 +961,7 @@ const styles: Record<string, CSSProperties> = {
   },
   card: {
     background: "var(--surface)",
-    border: "1px solid #ddd",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     padding: 18,
   },
@@ -973,12 +973,12 @@ const styles: Record<string, CSSProperties> = {
   th: {
     textAlign: "left",
     padding: "8px 10px",
-    borderBottom: "2px solid #ddd",
+    borderBottom: "2px solid var(--border)",
     color: "var(--text-secondary)",
   },
   td: {
     padding: "8px 10px",
-    borderBottom: "1px solid #eee",
+    borderBottom: "1px solid var(--border)",
     verticalAlign: "top",
   },
 };

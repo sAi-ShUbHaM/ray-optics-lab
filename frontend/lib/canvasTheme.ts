@@ -53,6 +53,9 @@ const NEUTRAL: Record<string, string> = {
   "#64748b": "#9a9a9a",
   "#cbd5e1": "#333333",
   "#b8b8b8": "#4a4a4a",
+  "#234": "#cdd6ea",
+  "#6b7280": "#9ca3af",
+  "#9aa3b2": "#7b8394",
 };
 
 // Data colours (rays, markers): lifted so they keep contrast on a dark ground.
@@ -84,6 +87,10 @@ const SCENE: Record<string, string> = {
   "#8bb07c": dim("#8bb07c", 0.3),
   "#c9a36b": dim("#c9a36b", 0.34),
   "#eef2ff": dim("#eef2ff", 0.1),
+  "#7fb2ea": dim("#7fb2ea", 0.42),
+  "#fbe6c8": dim("#fbe6c8", 0.45),
+  "#6b7a55": dim("#6b7a55", 0.42),
+  "#2f3b22": "#a8c080",
   "#5a6a8c": dim("#5a6a8c", 0.7),
   "#3b4a2f": dim("#3b4a2f", 0.8),
 };
@@ -114,20 +121,38 @@ export function themedColor(theme: Theme, color: string): string {
 }
 
 /**
+ * Set to false to draw all canvas text in Arial again (a one-line way back if a
+ * label ever looks too wide). Everything else keeps working either way.
+ */
+export const CANVAS_THEME_FONTS = true;
+
+/**
  * Canvas font string using the page's own fonts (Space Grotesk / Space Mono).
  * ctx.font cannot read CSS variables directly, so the family is resolved from
- * the variable next/font defines on <html>.
+ * the variable next/font defines on <html>. Text drawn before the font file has
+ * loaded falls back to Arial and picks up the real font on the next redraw.
  */
 export function canvasFont(
   size: number,
   kind: "sans" | "mono" = "sans",
   weight: number | string = 400,
 ): string {
-  const variable = kind === "mono" ? "--font-space-mono" : "--font-space-grotesk";
-  const family =
-    typeof document === "undefined"
-      ? ""
-      : getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
   const fallback = kind === "mono" ? "ui-monospace, Menlo, monospace" : "Arial, sans-serif";
+  if (!CANVAS_THEME_FONTS) return `${weight} ${size}px ${kind === "mono" ? fallback : "Arial, sans-serif"}`;
+
+  const family = resolveFamily(kind);
   return `${weight} ${size}px ${family ? `${family}, ` : ""}${fallback}`;
+}
+
+// The family strings never change once the page has loaded, so look them up once.
+const familyCache: { sans?: string; mono?: string } = {};
+
+function resolveFamily(kind: "sans" | "mono"): string {
+  if (typeof document === "undefined") return "";
+  const cached = familyCache[kind];
+  if (cached) return cached;
+  const variable = kind === "mono" ? "--font-space-mono" : "--font-space-grotesk";
+  const value = getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+  if (value) familyCache[kind] = value;
+  return value;
 }
