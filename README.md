@@ -1,90 +1,69 @@
+<div align="center">
+
 # Ray Optics Lab
 
-An interactive ray-optics simulator for exploring geometrical optics through visual ray diagrams, adjustable parameters, and physics-based calculations.
+### An Interactive Ray Optics Simulation Laboratory
 
-**Live Demo:** https://ray-optics-lab.vercel.app/
+Explore geometrical optics through interactive ray diagrams, optical instruments, and physics-based simulations.
 
-**Backend API:** https://ray-optics-lab.onrender.com/
+[**Live Demo**](https://ray-optics-lab.vercel.app/) ·
+[**Backend API**](https://ray-optics-lab.onrender.com/) ·
+[**API Documentation**](https://ray-optics-lab.onrender.com/docs)
 
-**API Documentation:** https://ray-optics-lab.onrender.com/docs
+</div>
+
+---
 
 ## Overview
 
-Ray Optics Lab is an educational web application designed to make geometrical optics easier to explore. Users can adjust simulation parameters and observe how light rays interact with mirrors, lenses, prisms, refractive surfaces, and atmospheric models.
+**Ray Optics Lab** is a web-based learning project for exploring ray optics concepts visually. It combines a modern frontend with a Python API to calculate and display optical behaviour across a range of simulations.
 
-The project uses a Next.js frontend and a Python FastAPI backend, separating the user interface from the optical calculations.
+The goal is to make concepts such as reflection, refraction, image formation, total internal reflection, and atmospheric effects easier to understand through interactive visualizations.
 
 ## Features
 
-### Basic Optics
-- Reflection from plane mirrors
-- Refraction and Snell's law
-- Total internal reflection (TIR)
-- Parallel glass slab and lateral displacement
+The project includes simulations and learning tools covering:
 
-### Mirrors and Lenses
-- Concave and convex spherical mirrors
-- Mirror image formation
-- Lens image formation
-- Exact and paraxial lens calculations, where supported
-- Lens combinations and equivalent focal length
+- **Reflection and refraction** — investigate how light rays behave at optical boundaries.
+- **Curved mirrors** — explore concave and convex mirror behaviour.
+- **Lens simulations** — study image formation, exact/paraxial lens behaviour, and combinations of lenses.
+- **Prisms and dispersion** — explore ray deviation and the separation of light.
+- **Optical slabs and apparent depth** — examine refraction through parallel-sided media and apparent position.
+- **Total internal reflection (TIR)** — visualize the conditions for total internal reflection.
+- **Optical fibre** — explore light propagation and the guiding principle of total internal reflection in an optical fibre.
+- **Optical instruments** — learn about microscope and telescope ray diagrams.
+- **Atmospheric refraction** — explore how changes in atmospheric conditions affect the path of light.
+- **Mirage** — visualize a simplified ray-path explanation of mirage formation.
+- **Rainbow and dispersion effects** — explore optical effects associated with dispersion and refraction.
 
-### Optical Components and Instruments
-- Prism deviation
-- Dispersion and wavelength-dependent refraction
-- Apparent depth
-- Compound microscope
-- Astronomical telescope
+> Simulation availability and the level of physical modelling can vary by module. Use the individual simulation controls and outputs to explore each topic.
 
-### Atmospheric and Natural Optical Phenomena
-- Mirage simulation
-- **Atmospheric refraction**, modelling how changes in atmospheric refractive index affect light paths and apparent celestial positions
-- Rainbow simulation
+## Tech Stack
 
-The atmospheric refraction model uses a simplified ray-optics approach. It is intended for educational exploration and should not be interpreted as a complete numerical weather or atmospheric model.
-
-## Technology Stack
-
-| Component | Technology |
+| Layer | Technologies |
 |---|---|
 | Frontend | Next.js, React, TypeScript |
-| Backend API | Python, FastAPI |
-| Numerical calculations | Python and NumPy, where used |
-| Request validation | Pydantic |
-| Frontend hosting | Vercel |
-| Backend hosting | Render |
+| Backend | Python, FastAPI |
 | Testing | pytest |
+| Frontend deployment | Vercel |
+| Backend deployment | Render |
 
-## Architecture
+## Live Project
 
-```text
-User
- |
- v
-Next.js / React Frontend
- |
- | HTTP requests (JSON)
- v
-FastAPI Backend
- |
- v
-Optical Simulation Modules
- |
- v
-Calculated Results
- |
- v
-Interactive Ray Diagrams
-```
+- **Web application:** https://ray-optics-lab.vercel.app/
+- **Backend health endpoint:** https://ray-optics-lab.onrender.com/health
+- **Interactive API docs:** https://ray-optics-lab.onrender.com/docs
 
-The frontend handles user interaction and visualisation. The backend validates simulation inputs, performs calculations, and returns results to the frontend.
+The backend is hosted on Render's free service. After a period of inactivity, it may take a little time to wake up when a request arrives.
 
 ## Run Locally
 
 ### Prerequisites
 
-- Python installed
-- Node.js and npm installed
+Install the following before starting:
+
+- Python
+- Node.js and npm
 - Git
 
 ### 1. Clone the repository
@@ -96,115 +75,149 @@ cd ray-optics-lab
 
 ### 2. Start the backend
 
-Open a terminal:
+Open a terminal in the repository root:
 
 ```bash
 cd backend
 python -m venv .venv
 ```
 
-Activate the virtual environment on Windows PowerShell:
+Activate the virtual environment.
+
+**Windows PowerShell:**
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+**Windows Command Prompt:**
 
-```bash
-python -m pip install -r requirements.txt
+```bat
+.venv\Scripts\activate.bat
 ```
 
-Start FastAPI:
+Install the backend dependencies and start the API:
 
 ```bash
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
-Backend documentation should now be available at:
+The backend should now be available at:
 
-http://127.0.0.1:8000/docs
+- API: http://127.0.0.1:8000
+- Interactive API docs: http://127.0.0.1:8000/docs
 
-### 3. Start the frontend
+Keep this terminal running.
 
-Open a second terminal:
+### 3. Configure and start the frontend
+
+Open a **second terminal** in the repository root:
 
 ```bash
 cd frontend
-npm install
 ```
 
-Create `frontend/.env.local` with the following configuration for local development:
+Create a `.env.local` file inside `frontend/` with:
 
 ```env
 NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
 ```
 
-Start Next.js:
+Install frontend dependencies and start the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
-Open:
+Open http://localhost:3000 in your browser.
 
-http://localhost:3000
+## Run Tests
 
-Keep both development servers running while using the application.
-
-## Running Tests
-
-From the repository root, activate the backend virtual environment if it is not already active.
-
-Run the atmospheric refraction tests:
+From the repository root, activate the backend virtual environment and run:
 
 ```bash
 cd backend
-python -m pytest tests/test_atmospheric_refraction.py -v
+python -m pytest -v
 ```
 
-These tests cover the atmospheric refraction module's implemented test cases. Passing tests do not, by themselves, establish the accuracy of every possible atmospheric condition or every simulation in the application.
+To run only the optical fibre simulation tests:
 
-## Deployment
+```bash
+python -m pytest tests/test_optical_fibre.py -v
+```
 
-The application uses separate frontend and backend deployments.
+If your project uses a virtual environment, make sure it is activated before running the tests.
 
-- **Vercel:** serves the Next.js frontend.
-- **Render:** runs the FastAPI backend.
+## Deployment Notes
 
-The frontend uses the `NEXT_PUBLIC_API_URL` environment variable to determine which backend it should call.
+### Frontend — Vercel
 
-For production, configure the frontend environment variable to point to the deployed backend API. For local development, use the localhost configuration shown above.
+Configure the frontend project with `frontend` as its root directory. Set the environment variable:
 
-The hosted backend may take additional time to respond after a period of inactivity, depending on the hosting plan.
+```env
+NEXT_PUBLIC_API_URL=https://ray-optics-lab.onrender.com
+```
 
-## Educational Scope and Limitations
+Redeploy the frontend after changing environment variables.
 
-Ray Optics Lab focuses on geometrical ray optics and educational models of optical phenomena.
+### Backend — Render
 
-Atmospheric refraction, mirages, rainbows, and dispersion may involve simplifying assumptions. Results should be interpreted according to the model and parameter ranges implemented by each simulation.
+Configure the backend service with `backend` as its root directory.
 
-The project is not intended to replace laboratory measurements, professional optical-design software, or comprehensive atmospheric modelling.
+- **Build command:** `pip install -r requirements.txt`
+- **Start command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
-## Future Development
+Make sure the backend CORS configuration permits requests from the deployed frontend domain.
 
-Potential future improvements include:
+## Project Structure
 
-- More scientifically validated simulation models
-- Additional guided experiments for school and college students
-- Improved accessibility and mobile usability
-- An interactive 3D optics environment
-- A standalone Windows desktop application
+```text
+ray-optics-lab/
+├── backend/
+│   ├── main.py
+│   ├── physics/
+│   ├── simulations/
+│   ├── tests/
+│   └── requirements.txt
+├── frontend/
+│   ├── app/
+│   ├── lib/
+│   ├── public/
+│   └── package.json
+└── README.md
+```
 
-These are development goals, not claims that all of these features are currently available.
+This is a high-level overview. Exact files and folders may change as the project evolves.
 
 ## Contributing
 
-Contributions, suggestions, and bug reports are welcome. When reporting an issue, include the simulation involved, the input parameters used, the expected result, and the observed behaviour.
+Contributions, bug reports, and suggestions are welcome.
 
-## Project Links
+1. Fork the repository.
+2. Create a branch for your change.
+3. Make and test your changes.
+4. Open a pull request describing the change.
 
-- **Repository:** https://github.com/sAi-ShUbHaM/ray-optics-lab
-- **Live Application:** https://ray-optics-lab.vercel.app/
-- **Backend Health Check:** https://ray-optics-lab.onrender.com/health
-- **Interactive API Docs:** https://ray-optics-lab.onrender.com/docs
+For simulation changes, include tests where practical and document the assumptions used by the optical model.
+
+## Roadmap
+
+Potential areas for future improvement:
+
+- Improve the accuracy and clarity of ray diagrams.
+- Expand simulation controls and explanatory outputs.
+- Add more optical systems and combined setups.
+- Improve test coverage and error handling.
+- Continue refining the UI and learning experience.
+
+## Author
+
+**Shubham**
+
+GitHub: [@sAi-ShUbHaM](https://github.com/sAi-ShUbHaM)
+
+---
+
+If you find the project useful, consider giving the repository a star.
