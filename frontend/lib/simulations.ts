@@ -71,6 +71,27 @@ export const SIMULATIONS: Simulation[] = [
     keywords: ["snell", "refractive index", "total internal reflection", "tir", "critical angle"],
   },
   {
+    id: "optical-fibre",
+    title: "Optical Fibre",
+    href: "/optical-fibre",
+    category: "reflection-refraction",
+    description:
+      "Light guided by total internal reflection: acceptance angle, numerical aperture, bends that leak, and pulse spreading.",
+    keywords: [
+      "total internal reflection",
+      "tir",
+      "acceptance angle",
+      "numerical aperture",
+      "na",
+      "core",
+      "cladding",
+      "critical angle",
+      "bend",
+      "modal dispersion",
+      "communication",
+    ],
+  },
+  {
     id: "slab",
     title: "Glass Slab and Apparent Depth",
     href: "/slab",

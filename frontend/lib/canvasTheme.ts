@@ -106,6 +106,9 @@ const ALPHA: Record<string, string> = {
   "rgba(255,255,255,0.94)": "rgba(10, 10, 10, 0.94)",
   "rgba(255,255,255,0.95)": "rgba(10, 10, 10, 0.95)",
   "rgba(14, 116, 144, 0.16)": "rgba(44, 198, 221, 0.18)",
+  "rgba(22, 113, 217, 0.14)": "rgba(90, 176, 255, 0.16)",
+  "rgba(22, 163, 74, 0.10)": "rgba(74, 222, 128, 0.12)",
+  "rgba(22, 163, 74, 0.55)": "rgba(74, 222, 128, 0.6)",
 };
 
 const DARK: Record<string, string> = { ...NEUTRAL, ...DATA, ...SCENE, ...ALPHA };

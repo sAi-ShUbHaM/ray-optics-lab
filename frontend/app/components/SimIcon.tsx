@@ -122,6 +122,14 @@ export function SimIcon({ id, size = 22 }: { id: string; size?: number }) {
           <circle cx="19" cy="6" r="1.6" />
         </svg>
       );
+    case "optical-fibre":
+      return (
+        <svg {...common}>
+          <path d="M2.5 8.5h19M2.5 15.5h19" />
+          <path d="M4 12l3.2-3.5 3.6 7 3.6-7 3.6 7 1.8-3.5" />
+          <path d="M2.5 5.5h19M2.5 18.5h19" opacity="0.35" strokeDasharray="1.5 2.5" />
+        </svg>
+      );
     default:
       return (
         <svg {...common}>

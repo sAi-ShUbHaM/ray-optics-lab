@@ -15,6 +15,7 @@ from simulations.slab import simulate_slab, simulate_apparent_depth
 from simulations.rainbow import simulate_rainbow
 from simulations.mirage import simulate_mirage
 from simulations.atmospheric_refraction import simulate_atmospheric_refraction
+from simulations.optical_fibre import simulate_optical_fibre
 from simulations.optical_instruments import (
     simulate_telescope,
     simulate_microscope,
@@ -536,6 +537,45 @@ def atmospheric_refraction(request: AtmosphericRefractionRequest):
             observer_height=request.observer_height,
             sun_true_altitude=request.sun_true_altitude,
             latitude=request.latitude
+        )
+    except ValueError as error:
+        # Bad input -> clear 422 message instead of a 500 crash.
+        raise HTTPException(status_code=422, detail=str(error))
+
+
+# -----------------------------
+# Optical Fibre (total internal reflection)
+# -----------------------------
+
+class OpticalFibreRequest(BaseModel):
+    n_core: float = 1.50
+    n_cladding: float = 1.35
+    n_outside: float = 1.0
+    entry_angle: float = 20.0
+    entry_height: float = 0.0
+    core_diameter_um: float = 50.0
+    length_m: float = 100.0
+    bend_radius: float = 0.0        # 0 = straight, else in core diameters
+    bend_angle: float = 90.0
+    view_length: float = 12.0
+    wavelength_nm: float = 1550.0
+
+
+@app.post("/simulate/optical-fibre")
+def optical_fibre(request: OpticalFibreRequest):
+    try:
+        return simulate_optical_fibre(
+            n_core=request.n_core,
+            n_cladding=request.n_cladding,
+            n_outside=request.n_outside,
+            entry_angle=request.entry_angle,
+            entry_height=request.entry_height,
+            core_diameter_um=request.core_diameter_um,
+            length_m=request.length_m,
+            bend_radius=request.bend_radius,
+            bend_angle=request.bend_angle,
+            view_length=request.view_length,
+            wavelength_nm=request.wavelength_nm
         )
     except ValueError as error:
         # Bad input -> clear 422 message instead of a 500 crash.
