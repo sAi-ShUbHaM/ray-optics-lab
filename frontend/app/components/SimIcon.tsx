@@ -130,6 +130,14 @@ export function SimIcon({ id, size = 22 }: { id: string; size?: number }) {
           <path d="M2.5 5.5h19M2.5 18.5h19" opacity="0.35" strokeDasharray="1.5 2.5" />
         </svg>
       );
+    case "prism-combination":
+      return (
+        <svg {...common}>
+          <path d="M8 5L3.5 18h9L8 5Z" />
+          <path d="M16.5 19L21 6h-9l4.5 13Z" opacity="0.7" />
+          <path d="M1.5 12h3" />
+        </svg>
+      );
     default:
       return (
         <svg {...common}>

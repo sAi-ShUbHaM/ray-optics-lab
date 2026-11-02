@@ -16,6 +16,7 @@ from simulations.rainbow import simulate_rainbow
 from simulations.mirage import simulate_mirage
 from simulations.atmospheric_refraction import simulate_atmospheric_refraction
 from simulations.optical_fibre import simulate_optical_fibre
+from simulations.prism_combination import simulate_prism_combination
 from simulations.optical_instruments import (
     simulate_telescope,
     simulate_microscope,
@@ -576,6 +577,45 @@ def optical_fibre(request: OpticalFibreRequest):
             bend_angle=request.bend_angle,
             view_length=request.view_length,
             wavelength_nm=request.wavelength_nm
+        )
+    except ValueError as error:
+        # Bad input -> clear 422 message instead of a 500 crash.
+        raise HTTPException(status_code=422, detail=str(error))
+
+
+# -----------------------------
+# Two prisms in a row (achromatic / direct-vision pairs)
+# -----------------------------
+
+class PrismCombinationRequest(BaseModel):
+    apex_angle_1: float = 10.0
+    n_d_1: float = 1.517
+    abbe_number_1: float = 64.2
+    apex_angle_2: float = 4.7
+    n_d_2: float = 1.620
+    abbe_number_2: float = 36.4
+    arrangement: str = "opposite"     # "same" or "opposite" (second prism turned over)
+    incidence_angle: float = 20.0
+    gap: float = 0.0                  # 0 = the two prisms are cemented together
+    spectrum_samples: int = 7
+    screen_distance: float = 25.0
+
+
+@app.post("/simulate/prism-combination")
+def prism_combination(request: PrismCombinationRequest):
+    try:
+        return simulate_prism_combination(
+            apex_angle_1=request.apex_angle_1,
+            n_d_1=request.n_d_1,
+            abbe_number_1=request.abbe_number_1,
+            apex_angle_2=request.apex_angle_2,
+            n_d_2=request.n_d_2,
+            abbe_number_2=request.abbe_number_2,
+            arrangement=request.arrangement,
+            incidence_angle=request.incidence_angle,
+            gap=request.gap,
+            spectrum_samples=request.spectrum_samples,
+            screen_distance=request.screen_distance
         )
     except ValueError as error:
         # Bad input -> clear 422 message instead of a 500 crash.

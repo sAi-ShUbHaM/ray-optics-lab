@@ -164,6 +164,26 @@ export const SIMULATIONS: Simulation[] = [
     keywords: ["dispersion", "spectrum", "deviation", "abbe", "critical angle", "tir", "total internal reflection"],
   },
   {
+    id: "prism-combination",
+    title: "Prism Combinations",
+    href: "/prism-combination",
+    category: "prisms-dispersion",
+    description:
+      "Two prisms in a row: an achromatic pair that cancels the colours, a direct-vision pair that cancels the bend, and pairs that add.",
+    keywords: [
+      "two prisms",
+      "achromatic",
+      "direct vision",
+      "abbe number",
+      "crown",
+      "flint",
+      "dispersion",
+      "spectroscope",
+      "cemented",
+      "thin prism",
+    ],
+  },
+  {
     id: "rainbow",
     title: "Rainbows",
     href: "/rainbow",
